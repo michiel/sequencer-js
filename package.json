@@ -1,0 +1,6 @@
+{ 
+  "name"    : "sequencer",
+  "version" : "0.0.1"
+  "author"  : "Michiel Kalkman <michiel.kalkman@gmail.com>"
+  "main"    : "./lib/sequencer.js"
+}
