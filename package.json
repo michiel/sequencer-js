@@ -8,6 +8,6 @@
   { 
     "type" : "git",
     "url"  : "http://github.com/michiel/sequencer-js.git"
-  }
-
+  },
+  "description" : "Library functions to manipulate arbitrary sync/async calls" 
 }
