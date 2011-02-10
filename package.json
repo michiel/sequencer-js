@@ -3,5 +3,11 @@
   "version"     : "0.0.1",
   "author"      : "Michiel Kalkman <michiel.kalkman@gmail.com>",
   "directories" : { "lib" : "./lib" },
-  "main"        : "./lib/sequencer"
+  "main"        : "./lib/sequencer",
+  "repository" :
+  { 
+    "type" : "git",
+    "url"  : "http://github.com/michiel/sequencer-js.git"
+  }
+
 }
