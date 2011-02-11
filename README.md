@@ -12,7 +12,7 @@ Example sequence
 ----------------
 
     //
-    // Sequence 10000 async calls in blocks of 500
+    // Sequence 10000 async calls
     // 
 
     var sequencer = require('sequencer');
