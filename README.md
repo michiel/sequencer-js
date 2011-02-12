@@ -24,6 +24,9 @@ and run it on really old JavaScript runtimes. In practice it means that it will
 also work in IE and all the horrid forms in which it presents itself to us
 today.
 
+There is also a Ruby implementation of the sequencer pattern (that lags behind
+this one) at https://github.com/michiel/sequencer-rb .
+
 Examples
 --------
 
@@ -93,6 +96,17 @@ Becomes,
     ]);
 
 The same goes for removing or adding new items.
+
+TODO
+----
+
+ - More documentation
+ - More tests
+ - Extend the basic implementations with start/stop/etc fluff
+ - Write up a rationale on error handling
+ - Possibly some inline docs
+
+
 
 
 
