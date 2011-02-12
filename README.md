@@ -48,39 +48,40 @@ For example,
 
 can be written using the basic sequence function as,
 
-  function doAsyncA(callback) {
-    callback();
-  };
-  function doAsyncB(callback) {
-    callback();
-  };
-  function doAsyncC(callback) {
-    callback();
-  };
-  sequence([
-    doAsyncA,
-    doAsyncB,
-    doAsyncC
-  ]);
+    function doAsyncA(callback) {
+      callback();
+    };
+    function doAsyncB(callback) {
+      callback();
+    };
+    function doAsyncC(callback) {
+      callback();
+    };
+
+    sequence([
+      doAsyncA,
+      doAsyncB,
+      doAsyncC
+    ]);
 
 This is a bit more verbose than the original version, but apart from the
 advantages that should later become apparent, it is already easier to read and
 refactor. For example, changing the order or doAsyncB and doAsyncC is a matter
 of re-ordering the elements in the array.
 
-  sequence([
-    doAsyncA,
-    doAsyncB,
-    doAsyncC
-  ]);
+    sequence([
+      doAsyncA,
+      doAsyncB,
+      doAsyncC
+    ]);
 
 Becomes,
 
-  sequence([
-    doAsyncA,
-    doAsyncC,
-    doAsyncB
-  ]);
+    sequence([
+      doAsyncA,
+      doAsyncC,
+      doAsyncB
+    ]);
 
 The same goes for removing or adding new items.
 
