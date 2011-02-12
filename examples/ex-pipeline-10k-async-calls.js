@@ -9,7 +9,7 @@ var sequencer = require('sequencer');
 // 
 
 var randomNumber = function() {
-  return Math.floor(Math.random() * 1000);
+  return Math.floor(Math.random() * 100);
 }
 
 //
