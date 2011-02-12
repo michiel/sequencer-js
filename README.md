@@ -15,127 +15,74 @@ Using npm,
 
     ~$ npm install sequencer
 
-Example sequence
-----------------
+Examples
+--------
 
-    //
-    // Sequence 10000 async calls
-    // 
+Examples can be found in the source examples/ directory. Each example can be run from the commandline. Ex,
 
-    var sequencer = require('sequencer');
+    ~/src/sequencer-js/examples$ node ex01-sequence-100-async-calls.js
 
-    //
-    // Build an array with 10000 sequencable async calls
-    //
+The Sequencer patterns
+----------------------
 
-    var asyncCalls = [];
+Sequencing deals with common problems related to ordering asynchronous
+functions. The primary one is decoupling flow control from functions. The
+secondary problem is executing tasks that are inter-dependant serially and
+tasks that are not in parallel. (The sequence method and collect/pipeline
+methods, respectively). Additionally it should be trivial to mix async and sync
+functions.
 
-    for (var i=0;i<10000;i++) {
-      (function(no) {
-          asyncCalls.push(
-            function(callback) {
-              console.log("Call #" + no);
-              setTimeout(callback, 1);
-            }
-          );
-        })(i);
-    }
+This is accomplished by keeping each discrete piece of functionality inside its
+own closure and having these closures take an argumentless callback function as
+their sole parameter.
 
-    sequencer.sequence(asyncCalls);
+For example,
 
-Example collect
----------------
+    doAsyncA(function() {
+      doAsyncB(function() {
+        doAsyncC(function() {
+          console.log("All done");
+        });
+      };
+    };
 
-    //
-    // Sequence 10000 async calls in blocks of 500
-    // 
+can be written using the basic sequence function as,
 
-    var sequencer = require('sequencer');
+  function doAsyncA(callback) {
+    callback();
+  };
+  function doAsyncB(callback) {
+    callback();
+  };
+  function doAsyncC(callback) {
+    callback();
+  };
+  sequence([
+    doAsyncA,
+    doAsyncB,
+    doAsyncC
+  ]);
 
-    //
-    // Build an array with 10000 sequencable async calls
-    //
+This is a bit more verbose than the original version, but apart from the
+advantages that should later become apparent, it is already easier to read and
+refactor. For example, changing the order or doAsyncB and doAsyncC is a matter
+of re-ordering the elements in the array.
 
-    var asyncCalls = [];
+  sequence([
+    doAsyncA,
+    doAsyncB,
+    doAsyncC
+  ]);
 
-    for (var i=0;i<10000;i++) {
-      (function(no) {
-          asyncCalls.push(
-            function(callback) {
-              // console.log("Call #" + no);
-              setTimeout(callback, 200); // Simulate async
-            }
-          );
-        })(i);
-    }
+Becomes,
 
-    //
-    // Chop the 10000 calls into blocks of 500
-    //
+  sequence([
+    doAsyncA,
+    doAsyncC,
+    doAsyncB
+  ]);
 
-    var BLOCKSIZE = 500;
-    var blocks = [];
-
-    do {
-      blocks.push(asyncCalls.splice(0,BLOCKSIZE));
-    } while(asyncCalls.length != 0);
-
-    //
-    // Build a new sequence for collecting each block
-    //
-
-    var sequenceCalls = [];
-
-    for (var i=0; i<blocks.length; i++) {
-      (function(offset) {
-          sequenceCalls.push(
-            function(callback){
-              sequencer.collect(blocks[offset], function() {
-                  // console.log("Finished block #" + offset);
-                  callback();
-                });
-            })
-        })(i);
-    }
-
-    //
-    // Add a finishing function at the end
-    //
-
-    sequenceCalls.push(function(callback) {
-        console.log("Finished all tasks");
-      });
-
-    sequencer.sequence(sequenceCalls);
-
-
-Example pipeline
-----------------
-
-    //
-    // Sequence 10000 async calls in a pipeline, with max 500 open
-    // 
-
-    var sequencer = require('sequencer');
-
-    //
-    // Build an array with 10000 sequencable async calls
-    //
-
-    var asyncCalls = [];
-
-    for (var i=0;i<10000;i++) {
-      (function(no) {
-          asyncCalls.push(
-            function(callback) {
-              // console.log("Call #" + no);
-              setTimeout(callback, 0); // Simulate async
-            }
-          );
-        })(i);
-    }
-
-    sequencer.pipeline(asyncCalls, 500, function() { console.log("All done"); });
+The same goes for removing or adding new items.
 
 
 
