@@ -15,6 +15,15 @@ Using npm,
 
     ~$ npm install sequencer
 
+Code
+----
+
+The code is all written using 1990s capabilities ECMAScript/262 (apart from the
+CommonJS 'require' convention). In theory that means you can go back in time
+and run it on really old JavaScript runtimes. In practice it means that it will
+also work in IE and all the horrid forms in which it presents itself to us
+today.
+
 Examples
 --------
 
