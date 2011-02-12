@@ -21,6 +21,10 @@ for (var i=0;i<10000;i++) {
     })(i);
 }
 
-sequencer.pipeline(asyncCalls, 500, function() { console.log("All done"); });
+sequencer.pipeline(
+  asyncCalls, 
+  function() { console.log("All done"); },
+  500
+);
 
 
