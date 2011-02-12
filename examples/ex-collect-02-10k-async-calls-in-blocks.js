@@ -1,5 +1,5 @@
 //
-// Example #2 : sequence 10000 async calls in blocks of 500
+// Example : sequence 10000 async calls in blocks of 500
 // 
 
 var sequencer = require('sequencer');
@@ -13,7 +13,7 @@ var randomNumber = function() {
 }
 
 //
-// Build an array with 10000 sequencable async calls
+// Build an array with 10k sequencable async calls
 //
 
 var asyncCalls = [];
@@ -30,7 +30,7 @@ for (var i=0;i<10000;i++) {
 }
 
 //
-// Chop the 10000 calls into blocks of max 500
+// Chop the 10k calls into blocks of max 500
 //
 
 var BLOCKSIZE = 500;
