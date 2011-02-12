@@ -8,6 +8,13 @@ There are three main functions.
  - collect, performs arbitrary sync/async calls in parallel and ends with a final callback
  - pipeline, performs arbitrary sync/async calls in parallel as long as there are slots available and ends with a final callback
 
+Install
+-------
+
+Using npm,
+
+    ~$ npm install sequencer
+
 Example sequence
 ----------------
 
