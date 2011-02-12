@@ -97,6 +97,19 @@ Becomes,
 
 The same goes for removing or adding new items.
 
+### sequence ###
+
+The sequence function is for ordering calls that have to be executed sequentially (i.e. calls that are interdependant).
+
+### collect ###
+
+The collect function is for parallelization of calls that are not interdependant. It takes a seperate callback function to invoke on completion. It can be mixed with multiple sequence or collect calls to provide calling scheduling similar to Thread.join(). After completion of all calls a final callback will be invoked.
+
+### pipeline ###
+
+The pipeline function is for maximum perfomance when executing calls that are not interdependant. Calls will be executed until there are no other slots available. Pipeline execution will continue until all calls have been executed. After completion of all calls a final callback will be invoked.
+
+
 TODO
 ----
 
