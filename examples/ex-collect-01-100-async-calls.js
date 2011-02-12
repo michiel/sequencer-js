@@ -2,7 +2,7 @@
 // Example : collect 100 parallel async calls
 // 
 
-var sequencer = require('sequencer');
+var collect = require('sequencer').collect;
 
 //
 // Get a pseudo random number to simulate async variability
@@ -37,5 +37,5 @@ asyncCalls.push(function(callback) {
     console.log("Finished all tasks");
   });
 
-sequencer.sequence(asyncCalls);
+collect(asyncCalls);
 
