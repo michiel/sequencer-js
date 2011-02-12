@@ -5,6 +5,14 @@
 var sequencer = require('sequencer');
 
 //
+// Get a pseudo random number to simulate async variability
+// 
+
+var randomNumber = function() {
+  return Math.floor(Math.random() * 1000);
+}
+
+//
 // Build an array with 10000 sequencable async calls
 //
 
@@ -15,14 +23,14 @@ for (var i=0;i<10000;i++) {
       asyncCalls.push(
         function(callback) {
           console.log("Call #" + no);
-          setTimeout(callback, 200); // Simulate async
+          setTimeout(callback, randomNumber()); // Simulate async
         }
       );
     })(i);
 }
 
 //
-// Chop the 10000 calls into blocks of 500
+// Chop the 10000 calls into blocks of max 500
 //
 
 var BLOCKSIZE = 500;
