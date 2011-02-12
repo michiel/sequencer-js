@@ -1,6 +1,6 @@
 { 
   "name"        : "sequencer",
-  "version"     : "0.0.1",
+  "version"     : "0.0.2",
   "author"      : "Michiel Kalkman <michiel.kalkman@gmail.com>",
   "directories" : { "lib" : "./lib" },
   "main"        : "./lib/sequencer",
