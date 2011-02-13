@@ -17,7 +17,7 @@ for (var i=0; i<100; i++) {
 pipeline(
   asyncCalls,
   function(cb) {
-    console.log("Finished pipelineion");
+    console.log("Finished pipeline");
   },
   10
 );
