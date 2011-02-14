@@ -4,29 +4,90 @@ var testCase = require('nodeunit').testCase;
 
 module.exports = testCase({
 
-    sequencer_test_001: function (test) {
+    sequencer_test_001_basic: function (test) {
       var counter = 0;
 
       var asyncCall = function(callback) {
-        // console.log("Finished asyncCall");
         counter++;
-        callback();
+        setTimeout(callback, 1);
       }
 
-      var seq = [
+      sequence([
         asyncCall,
         asyncCall,
         asyncCall,
         asyncCall,
         asyncCall,
         function(cb) {
-          // console.log("Finished sequence");
           test.equals(counter, 5);
           test.done();
         }
-      ];
+        ]
+      );
+    },
 
-      sequence(seq);
+    sequencer_test_002_nested: function (test) {
+      var counter = 0;
+
+      var asyncCall = function(callback) {
+        counter++;
+        callback();
+      }
+
+      sequence([
+        asyncCall,
+        asyncCall,
+        asyncCall,
+        function(cb) {
+          sequence([
+            asyncCall,
+            asyncCall,
+            function(cb) {
+              test.equals(counter, 5);
+              test.done();
+              cb && cb();
+            },
+            cb
+            ]);
+        }
+        ]
+      );
+    },
+
+    sequencer_test_003_nested: function (test) {
+      var counter = 0;
+
+      var asyncCall = function(callback) {
+        counter++;
+        callback();
+      }
+
+      sequence([
+        asyncCall,
+        asyncCall,
+        function(cb) {
+          sequence([
+            asyncCall,
+            function(cb) {
+              sequence([
+                asyncCall,
+                asyncCall,
+                function(cb) {
+                  cb && cb();
+                },
+                cb
+                ]);
+            },
+            function(cb) {
+              test.equals(counter, 5);
+              test.done();
+              cb && cb();
+            },
+            cb
+            ]);
+        }
+        ]
+      );
     }
 
 });
