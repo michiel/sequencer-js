@@ -1,21 +1,33 @@
-
 var sequence = require('sequencer').sequence;
 
-var asyncCall = function(callback) {
-  console.log("Finished asyncCall");
-  callback();
-}
+var testCase = require('nodeunit').testCase;
 
-var seq = [
-  asyncCall,
-  asyncCall,
-  asyncCall,
-  asyncCall,
-  asyncCall,
-  function(cb) {
-    console.log("Finished sequence");
-  }
-];
+module.exports = testCase({
 
-sequence(seq);
+    sequencer_test_001: function (test) {
+      var counter = 0;
+
+      var asyncCall = function(callback) {
+        // console.log("Finished asyncCall");
+        counter++;
+        callback();
+      }
+
+      var seq = [
+        asyncCall,
+        asyncCall,
+        asyncCall,
+        asyncCall,
+        asyncCall,
+        function(cb) {
+          // console.log("Finished sequence");
+          test.equals(counter, 5);
+          test.done();
+        }
+      ];
+
+      sequence(seq);
+    }
+
+});
 
