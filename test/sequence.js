@@ -9,7 +9,7 @@ module.exports = testCase({
 
       var asyncCall = function(callback) {
         counter++;
-        setTimeout(callback, 1);
+        setTimeout(callback, Math.floor(Math.random() * 100));
       }
 
       sequence([
@@ -31,7 +31,7 @@ module.exports = testCase({
 
       var asyncCall = function(callback) {
         counter++;
-        callback();
+        setTimeout(callback, Math.floor(Math.random() * 100));
       }
 
       sequence([
@@ -59,7 +59,7 @@ module.exports = testCase({
 
       var asyncCall = function(callback) {
         counter++;
-        callback();
+        setTimeout(callback, Math.floor(Math.random() * 100));
       }
 
       sequence([
