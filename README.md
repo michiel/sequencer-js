@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/michiel/sequencer-js.png)](https://travis-ci.org/michiel/sequencer-js)
+
 # sequencer-js
 
 Library functions for various sequencing related patterns.
