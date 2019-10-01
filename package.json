@@ -1,13 +1,28 @@
-{ 
-  "name"        : "sequencer",
-  "version"     : "0.0.3",
-  "author"      : "Michiel Kalkman <michiel.kalkman@gmail.com>",
-  "directories" : { "lib" : "./lib" },
-  "main"        : "./lib/sequencer",
-  "repository" :
-  { 
-    "type" : "git",
-    "url"  : "http://github.com/michiel/sequencer-js.git"
+{
+  "name": "sequencer",
+  "version": "0.0.3",
+  "author": "Michiel Kalkman <michiel@nosuchtype.com>",
+  "description": "Library functions to order the execution of arbitrary sync/async calls",
+  "main": "./src/index",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix"
   },
-  "description" : "Library functions to order the execution of arbitrary sync/async calls" 
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/michiel/sequencer-js.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "jest": "*",
+    "jest-cli": "*"
+  }
 }

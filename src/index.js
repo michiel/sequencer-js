@@ -1,83 +1,78 @@
-
-var logging = false;
-
-exports.startLogging = function() {
-  logging = true;
+function log(/* msg */) {
+  // console.debug(`sequencer : ${msg}`);
 }
 
-exports.stopLogging = function() {
-  logging = false;
+function emptyCallback(cb) {
+  if (cb) { cb(); }
 }
 
-function log(msg) {
-  console.info("sequencer : " + msg);
-}
-
-var emptyCallback = function(cb) {
-  cb && cb();
-}
-
-
-exports.sequence = function(actions) {
-  var self = function() {
-    actions.length && actions.shift()(self);
-  }
+function sequence(actions) {
+  const self = () => {
+    if (actions.length) {
+      actions.shift()(self);
+    }
+  };
   self();
 }
 
-exports.collect = function(actions, finalCallback) {
-  var size    = actions.length;
-  var finalcb = finalCallback || emptyCallback;
+function collect(actions, finalCallback) {
+  let size = actions.length;
+  const finalcb = finalCallback || emptyCallback;
 
-  for (var i=0; i<actions.length; i++) {
-    actions[i](function() {
-        logging && log("Size is " + size);
-        if (--size == 0) {
-          logging && log("Finished block");
-          finalcb();
-        }
+  for (let i = 0; i < actions.length; i += 1) {
+    actions[i](() => {
+      log(`Size is ${size}`);
+      size -= 1;
+      if (size === 0) {
+        log('Finished block');
+        finalcb();
       }
-    );
+    });
   }
 }
 
-exports.pipeline = function(actions, finalCallback, maxOpenCalls) {
-
-  var openCalls = 0;
-  var finalcb   = finalCallback || emptyCallback;
-  var maxOpen   = maxOpenCalls  || Infinity;
-
-  function callback() {
-    if (--openCalls < maxOpen) {
-      launch();
-    }
-  }
+function pipeline(actions, finalCallback, maxOpenCalls) {
+  let openCalls = 0;
+  const finalcb = finalCallback || emptyCallback;
+  const maxOpen = maxOpenCalls || Infinity;
+  let callback;
 
   function launch() {
-    if (actions.length != 0) {
+    if (actions.length !== 0) {
       do {
-        openCalls++;
+        openCalls += 1;
         actions.shift()(callback);
       } while (
-        (openCalls < maxOpen) && 
-        (actions.length != 0)
+        (openCalls < maxOpen)
+        && (actions.length !== 0)
       );
     } else if (
-      (actions.length == 0) && 
-      (openCalls == 0)
+      (actions.length === 0)
+      && (openCalls === 0)
     ) {
-      logging && log("Finished all calls");
+      log('Finished all calls');
       finalcb();
     } else {
-      logging && log("Too many calls open, waiting");
+      log('Too many calls open, waiting');
     }
   }
 
-  var initial = (maxOpen > actions.length) ? maxOpen : actions.length;
+  callback = () => {
+    openCalls -= 1;
+    if (openCalls < maxOpen) {
+      launch();
+    }
+  };
 
-  for (var i=0; i<initial; i++) {
+  const initial = (maxOpen > actions.length) ? maxOpen : actions.length;
+
+  for (let i = 0; i < initial; i += 1) {
     launch();
   }
 }
 
-
+module.exports = {
+  pipeline,
+  collect,
+  sequence,
+};
